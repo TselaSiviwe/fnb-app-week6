@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Contact Book App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f6f8;
+      margin: 0;
+      padding: 0;
+    }
+
+    .container {
+      max-width: 500px;
+      margin: 40px auto;
+      background: #ffffff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    h1, h2 {
+      text-align: center;
+      color: #2c3e50;
+    }
+
+    .form {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 16px;
+      flex: 1;
+      min-width: 40%;
+    }
+
+    button {
+      padding: 10px 20px;
+      background-color: #3498db;
+      color: white;
+      border: none;
+      cursor: pointer;
+      border-radius: 5px;
+    }
+
+    button:hover {
+      background-color: #2980b9;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    li {
+      background-color: #ecf0f1;
+      margin-bottom: 10px;
+      padding: 10px;
+      border-radius: 6px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .delete-btn {
+      background: #e74c3c;
+      color: white;
+      border: none;
+      padding: 5px 10px;
+      cursor: pointer;
+      border-radius: 4px;
+    }
+
+    .delete-btn:hover {
+      background: #c0392b;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    <h1>📒 Contact Book</h1>
+
+    <div class="form">
+      <input type="text" id="name" placeholder="Name" />
+      <input type="text" id="phone" placeholder="Phone Number" />
+      <button onclick="addContact()">Add Contact</button>
+    </div>
+
+    <h2>Saved Contacts</h2>
+    <ul id="contactList"></ul>
+  </div>
+
+  <script>
+    let contacts = [];
+
+    function addContact() {
+      const name = document.getElementById("name").value.trim();
+      const phone = document.getElementById("phone").value.trim();
+
+      if (name === "" || phone === "") {
+        alert("Please enter both name and phone number.");
+        return;
+      }
+
+      contacts.push({ name, phone });
+      document.getElementById("name").value = "";
+      document.getElementById("phone").value = "";
+      displayContacts();
+    }
+
+    function displayContacts() {
+      const list = document.getElementById("contactList");
+      list.innerHTML = "";
+
+      contacts.forEach((contact, index) => {
+        const li = document.createElement("li");
+        li.innerHTML = `
+          <span>${contact.name} - ${contact.phone}</span>
+          <button class="delete-btn" onclick="deleteContact(${index})">Delete</button>
+        `;
+        list.appendChild(li);
+      });
+    }
+
+    function deleteContact(index) {
+      contacts.splice(index, 1);
+      displayContacts();
+    }
+  </script>
+
+</body>
+</html>
